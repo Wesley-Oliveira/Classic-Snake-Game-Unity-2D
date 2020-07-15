@@ -29,12 +29,16 @@ public class _GC : MonoBehaviour
     public int score;
     public int record;
 
+    public GameObject panelGameOver;
+    public GameObject panelTitle;
+
     void Start()
     {
         StartCoroutine(MoveSnake());
         SetFood();
         record = PlayerPrefs.GetInt("Record");
         txtRecord.text = "Record: " + record.ToString();
+        Time.timeScale = 0;
     }
 
     void Update()
@@ -127,9 +131,33 @@ public class _GC : MonoBehaviour
     public void GameOver()
     {
         Time.timeScale = 0;
+        panelGameOver.SetActive(true);
         if(score > record)
         {
             PlayerPrefs.SetInt("Record", score);
+            txtRecord.text = "New Record: " + score.ToString();
         }
+    }
+
+    public void Play()
+    {
+        head.position = Vector3.zero;
+        moveDirection = Direction.LEFT;
+
+        foreach(Transform t in tail)
+        {
+            Destroy(t.gameObject);
+        }
+
+        tail.Clear();
+        head.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        SetFood();
+        score = 0;
+        txtScore.text = "Score: 0";
+        record = PlayerPrefs.GetInt("Record");
+        txtRecord.text = "Record: " + record.ToString();
+        panelGameOver.SetActive(false);
+        panelTitle.SetActive(false);
+        Time.timeScale = 1;
     }
 }
