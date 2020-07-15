@@ -83,6 +83,7 @@ public class _GC : MonoBehaviour
             Vector3 temp = t.position;
             t.position = lastPos;
             lastPos = temp;
+            t.gameObject.GetComponent<BoxCollider2D>().enabled = true;
         }
 
         StartCoroutine(MoveSnake());
