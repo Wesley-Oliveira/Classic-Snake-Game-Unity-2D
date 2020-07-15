@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -15,6 +16,8 @@ public class _GC : MonoBehaviour
 
     public Transform head;
     public List<Transform> tail;
+    public GameObject foodPrefab;
+    public GameObject tailPrefab;
 
     private Vector3 lastPos;
 
@@ -83,5 +86,18 @@ public class _GC : MonoBehaviour
         }
 
         StartCoroutine(MoveSnake());
+    }
+
+    public void Eat()
+    {
+        Vector3 tailPosition = head.position;
+        
+        if(tail.Count > 0)
+        {
+            tailPosition = tail[tail.Count - 1].position;
+        }
+
+        GameObject temp = Instantiate(tailPrefab, tailPosition, transform.localRotation);
+        tail.Add(temp.transform);
     }
 }
