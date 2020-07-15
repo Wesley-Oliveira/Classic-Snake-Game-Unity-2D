@@ -1,6 +1,6 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.U2D.Sprites;
 using UnityEngine;
 
 public class _GC : MonoBehaviour
@@ -15,15 +15,19 @@ public class _GC : MonoBehaviour
     public float step;
 
     public Transform head;
+    public Transform food;
     public List<Transform> tail;
-    public GameObject foodPrefab;
     public GameObject tailPrefab;
 
     private Vector3 lastPos;
 
+    public int cols = 29;
+    public int rows = 15;
+
     void Start()
     {
         StartCoroutine(MoveSnake());
+        SetFood();
     }
 
     void Update()
@@ -100,5 +104,14 @@ public class _GC : MonoBehaviour
 
         GameObject temp = Instantiate(tailPrefab, tailPosition, transform.localRotation);
         tail.Add(temp.transform);
+        SetFood();
+    }
+
+    void SetFood()
+    {
+        int x = UnityEngine.Random.Range((cols - 1) / 2 * -1, (cols - 1) / 2);
+        int y = UnityEngine.Random.Range((rows - 1) / 2 * -1, (rows - 1) / 2);
+
+        food.position = new Vector2(x * step, y * step);
     }
 }
