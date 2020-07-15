@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.U2D.Sprites;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class _GC : MonoBehaviour
 {
@@ -24,10 +24,17 @@ public class _GC : MonoBehaviour
     public int cols = 29;
     public int rows = 15;
 
+    public Text txtScore;
+    public Text txtRecord;
+    public int score;
+    public int record;
+
     void Start()
     {
         StartCoroutine(MoveSnake());
         SetFood();
+        record = PlayerPrefs.GetInt("Record");
+        txtRecord.text = "Record: " + record.ToString();
     }
 
     void Update()
@@ -58,7 +65,7 @@ public class _GC : MonoBehaviour
         yield return new WaitForSeconds(delayStep);
 
         Vector3 nexPos = Vector3.zero;
-        switch(moveDirection)
+        switch (moveDirection)
         {
             case Direction.DOWN:
                 nexPos = Vector3.down;
@@ -82,7 +89,7 @@ public class _GC : MonoBehaviour
         lastPos = head.position;
         head.position += nexPos;
 
-        foreach(Transform t in tail)
+        foreach (Transform t in tail)
         {
             Vector3 temp = t.position;
             t.position = lastPos;
@@ -96,14 +103,16 @@ public class _GC : MonoBehaviour
     public void Eat()
     {
         Vector3 tailPosition = head.position;
-        
-        if(tail.Count > 0)
+
+        if (tail.Count > 0)
         {
             tailPosition = tail[tail.Count - 1].position;
         }
 
         GameObject temp = Instantiate(tailPrefab, tailPosition, transform.localRotation);
         tail.Add(temp.transform);
+        score += 10;
+        txtScore.text = "Score: " + score.ToString();
         SetFood();
     }
 
@@ -113,5 +122,14 @@ public class _GC : MonoBehaviour
         int y = UnityEngine.Random.Range((rows - 1) / 2 * -1, (rows - 1) / 2);
 
         food.position = new Vector2(x * step, y * step);
+    }
+
+    public void GameOver()
+    {
+        Time.timeScale = 0;
+        if(score > record)
+        {
+            PlayerPrefs.SetInt("Record", score);
+        }
     }
 }

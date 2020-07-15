@@ -12,7 +12,7 @@ public class Head : MonoBehaviour
                 gameController.Eat();
                 break;
             case "Tail":
-                print("morreu");
+                gameController.GameOver();
                 break;
         }
     }
