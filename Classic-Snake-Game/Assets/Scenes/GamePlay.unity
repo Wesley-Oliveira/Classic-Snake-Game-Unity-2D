@@ -1300,7 +1300,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: 0
-  delayStep: 0.15
+  delayStep: 0.18
   step: 0.6
   head: {fileID: 1663734398}
   food: {fileID: 1709761781}
