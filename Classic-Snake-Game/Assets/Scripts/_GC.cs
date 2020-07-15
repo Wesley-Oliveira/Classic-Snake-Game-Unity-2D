@@ -14,6 +14,9 @@ public class _GC : MonoBehaviour
     public float step;
 
     public Transform head;
+    public List<Transform> tail;
+
+    private Vector3 lastPos;
 
     void Start()
     {
@@ -52,20 +55,32 @@ public class _GC : MonoBehaviour
         {
             case Direction.DOWN:
                 nexPos = Vector3.down;
+                head.rotation = Quaternion.Euler(0, 0, 90);
                 break;
             case Direction.LEFT:
                 nexPos = Vector3.left;
+                head.rotation = Quaternion.Euler(0, 0, 0);
                 break;
             case Direction.RIGHT:
                 nexPos = Vector3.right;
+                head.rotation = Quaternion.Euler(0, 0, 180);
                 break;
             case Direction.UP:
                 nexPos = Vector3.up;
+                head.rotation = Quaternion.Euler(0, 0, -90);
                 break;
         }
 
         nexPos *= step;
+        lastPos = head.position;
         head.position += nexPos;
+
+        foreach(Transform t in tail)
+        {
+            Vector3 temp = t.position;
+            t.position = lastPos;
+            lastPos = temp;
+        }
 
         StartCoroutine(MoveSnake());
     }
