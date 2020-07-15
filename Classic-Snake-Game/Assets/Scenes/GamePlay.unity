@@ -328,6 +328,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbd7f8758d7f1dc4fb78bbdd42cc0c23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveDirection: 0
+  delayStep: 0.2
+  step: 0.6
+  head: {fileID: 1663734398}
 --- !u!1 &1663734394
 GameObject:
   m_ObjectHideFlags: 0
