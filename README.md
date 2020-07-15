@@ -27,4 +27,5 @@ The project was developed using Unity 2019.3.11f1
 
 - Clone this repository;
 - Use Unity to open the local clone of this repository and press run button;
+
 Note: The game runs on a reference aspect ratio of 16:9.
